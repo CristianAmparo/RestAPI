@@ -20,17 +20,20 @@ const postSample = asyncHandler(async (req, res) => {
 })
 
 const putSample = asyncHandler(async (req, res) => {
-    const samples = await Sample.findById(req.params.id);
+    const sample = await Sample.findById(req.params.id);
 
-    if (!samples) {
+    if (!sample) {
         res.status(400)
         throw new Error('Id not find')
     }
-    const updatedSample = await Sample.findByIdAndUpdate(req.params.id, req.body, {
+
+    await Sample.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
-    })
-    res.json(updatedSample)
-})
+    });
+
+
+    res.json({ id: req.params.id });
+});
 const deleteSample = asyncHandler(async (req, res) => {
     const samples = await Sample.findById(req.params.id)
 
